@@ -1,0 +1,10 @@
+config.json
+{
+"database_name": "databasename",
+"port_number": "5432",
+"host_name": "hostname",
+"username": "service_account",
+"password": "***",
+"email_to": "email@mailserver.com",
+"smtp_relay": "smtpserver"
+}
