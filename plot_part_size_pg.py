@@ -1,6 +1,7 @@
 import json
 import psycopg2
 import os, re
+import base64
 import plotly.offline as offline
 import plotly.graph_objs as plgo
 from envelopes import Envelope
@@ -12,7 +13,7 @@ conf.close()
 
 conn_str = "dbname={0} host={1} port={2} user={3} password={4}"\
            .format(parms["database_name"], parms["host_name"], parms["port_number"],\
-           parms["username"], parms["password"])
+           parms["username"], base64.b64decode(parms["password"][::-1]+chr(61)))
 
 try:
     conn = psycopg2.connect(conn_str)
@@ -23,8 +24,7 @@ except:
 sql = """select right(relname,10), pg_total_relation_size(oid)/1024/1024/1024::float
          from pg_class
          where relname like 'meter_channel_reading_2%'
-         and reltype<>0
-         /*order by 1*/"""
+         and reltype<>0"""
 
 cur = conn.cursor()
 cur.execute(sql)
