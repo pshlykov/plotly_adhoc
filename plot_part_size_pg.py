@@ -23,7 +23,7 @@ except:
 
 sql = """select right(relname,10), pg_total_relation_size(oid)/1024/1024/1024::float
          from pg_class
-         where relname like 'meter_channel_reading_2%'
+         where relname like '%partitioned_table_name_%'
          and reltype<>0"""
 
 cur = conn.cursor()
@@ -53,7 +53,7 @@ rep_file_name = offline.plot(fig)
 
 envelope = Envelope(from_addr = (u'no-reply@mailserver.com'),
                       to_addr = (parms["email_to"]),
-                      subject = u'Daily partitions size bar chart',
+                      subject = u'Partitions size bar chart',
                     text_body = u'Please open the attachment to explore the graph'
                    )
 
